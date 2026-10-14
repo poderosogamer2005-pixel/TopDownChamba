@@ -299,20 +299,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 58334375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f531c51889d3c5247928f902f5da3832, type: 3}
+  m_Script: {fileID: 11500000, guid: a03f15fe4626d784b84327fbbb2a6196, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController2
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController3
   characterController: {fileID: 58334380}
-  speed: 10
-  interactableRadius: 1.27
+  speed: 5
+  interactableRadius: 1.12
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  camara: {fileID: 330585545}
-  sueloLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  rotationSpeed: 20
+  currentWeapon: {fileID: 11400000, guid: d195392e24094494895c59d4b38dc03e, type: 2}
+  primaryWeapon: {fileID: 11400000, guid: d195392e24094494895c59d4b38dc03e, type: 2}
+  secondaryWeapon: {fileID: 11400000, guid: 3e50e3c351bdcb24db8c7ad035d3943f, type: 2}
+  primaryBullet: 100
+  shootTimer: 0
 --- !u!1 &297190767
 GameObject:
   m_ObjectHideFlags: 0
