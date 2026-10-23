@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -72,6 +73,31 @@ public class PlayerController3 : MonoBehaviour
     {
         Movement();
         Looking();
+        IInteractable closestInteractable = null;
+
+        List<Collider> interactableColliders = Physics.OverlapSphere(transform.position + transform.forward, interactableRadius).ToList();
+
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider collider in interactableColliders)
+        {
+            if (collider.transform.TryGetComponent<IInteractable>(
+                out IInteractable interactable))
+            {
+                float distance = Vector3.Distance(collider.transform.position, transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestInteractable = interactable;
+                    closestDistance = distance;
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            closestInteractable?.Interact();
+        }
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
