@@ -160,14 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8721804e1f66414d99853455c40a0a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy4
-  damagePerHit: 5
-  detectionRadius: 6.52
-  attackRadius: 1.52
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  agent: {fileID: 4810620958102089801}
   health: 100
+  damagePerHit: 5
+  detectionRadius: 201.38
+  attackRadius: 1.52
+  attackCooldown: 1
+  agent: {fileID: 4810620958102089801}
 --- !u!195 &4810620958102089801
 NavMeshAgent:
   m_ObjectHideFlags: 0

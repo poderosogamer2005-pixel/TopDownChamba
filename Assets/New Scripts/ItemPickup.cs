@@ -11,8 +11,8 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerController3 jugador =
-            other.GetComponentInParent<PlayerController3>();
+        PlayerController5 jugador =
+            other.GetComponentInParent<PlayerController5>();
 
         if (jugador == null || objeto == null)
             return;

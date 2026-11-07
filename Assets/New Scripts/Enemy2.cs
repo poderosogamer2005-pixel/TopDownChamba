@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy2 : MonoBehaviour, IInteractable, IDamagable
+public class Enemy2 : MonoBehaviour
 {
     [field: SerializeField]
     public int Health { get; set; } = 100;
