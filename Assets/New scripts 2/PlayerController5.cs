@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +21,10 @@ public class PlayerController5 : MonoBehaviour
     [SerializeField] private WeaponSO currentWeapon;
     [SerializeField] private WeaponSO primaryWeapon;
     [SerializeField] private WeaponSO secondaryWeapon;
+
+    [Header("Sistema de inventario")]
+    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private ItemSO equipamientoActual;
 
     [Header("Munición")]
     [SerializeField] private int primaryBullet = 30;
@@ -74,6 +79,10 @@ public class PlayerController5 : MonoBehaviour
     private void Update()
     {
         if (jugadorDerrotado)
+            return;
+
+        // Bloquear movimiento y disparo con el inventario abierto.
+        if (inventoryUI != null && inventoryUI.MenuAbierto)
             return;
 
         Movement();
@@ -185,7 +194,7 @@ public class PlayerController5 : MonoBehaviour
 
         for (int i = 0; i < currentWeapon.projectileAmount; i++)
         {
-            float angle = Random.Range(
+            float angle = UnityEngine.Random.Range(
                 -currentWeapon.scatter,
                 currentWeapon.scatter
             );
@@ -328,6 +337,75 @@ public class PlayerController5 : MonoBehaviour
         }
 
         Debug.Log("Objeto obtenido: " + objeto.nombre);
+
+        if (inventoryUI != null)
+        {
+            inventoryUI.ActualizarInventario();
+        }
+    }
+
+    // Equipar objetos desde el inventario.
+    public void EquiparObjeto(ItemSO objeto)
+    {
+        if (objeto == null)
+            return;
+
+        if (!inventario.Contains(objeto))
+        {
+            Debug.LogWarning("El objeto no está en el inventario.");
+            return;
+        }
+
+        if (objeto.tipo == ItemType.Arma)
+        {
+            if (objeto is WeaponSO nuevaArma)
+            {
+                if (currentWeapon == nuevaArma)
+                {
+                    Debug.Log("Esta arma ya está equipada.");
+                    return;
+                }
+
+                if (currentWeapon != null)
+                {
+                    Debug.Log("Arma desequipada: " + currentWeapon.nombre);
+                }
+
+                currentWeapon = nuevaArma;
+
+                ActualizarArmas();
+
+                indiceArma = armas.IndexOf(nuevaArma);
+
+                Debug.Log("Nueva arma equipada: " + nuevaArma.nombre);
+            }
+            else
+            {
+                Debug.LogWarning("El objeto no es un WeaponSO.");
+            }
+        }
+        else if (objeto.tipo == ItemType.Equipamiento)
+        {
+            if (equipamientoActual != null)
+            {
+                vidaMaxima -= equipamientoActual.vidaExtra;
+                vidaBase = Mathf.Min(vidaBase, vidaMaxima);
+
+                Debug.Log("Equipamiento desequipado: " +
+                    equipamientoActual.nombre);
+            }
+
+            equipamientoActual = objeto;
+
+            vidaMaxima += equipamientoActual.vidaExtra;
+            vidaBase += equipamientoActual.vidaExtra;
+
+            Debug.Log("Equipamiento equipado: " +
+                equipamientoActual.nombre);
+        }
+
+        if (inventoryUI != null)
+            inventoryUI.ActualizarInventario();
     }
 
     public void AgregarRecursos(int cantidad)

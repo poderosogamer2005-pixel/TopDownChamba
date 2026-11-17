@@ -13,6 +13,7 @@ public class ItemSO : ScriptableObject
     [Header("Información del objeto")]
     public string nombre;
     public ItemType tipo;
+    public Sprite icono;
 
     [Header("Estadísticas")]
     public float dano;
